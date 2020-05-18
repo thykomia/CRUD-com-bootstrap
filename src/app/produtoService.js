@@ -6,6 +6,35 @@ export function ErroValidacao(errors){
 }
 
 export default class ProdutoService{
+    obterProdutos = () =>{
+    
+        const produtos = localStorage.getItem(PRODUTOS);
+        if(!produtos){
+            return [];
+        }
+        return JSON.parse(produtos)
+}
+    obterIndex = (sku)=>{
+        let index = null;
+        this.obterProdutos().forEach( (produto, i) =>{
+            if(produto.SKU === sku){
+                index = i;
+                console.log('OBTIVE O INDEX: '+index);
+            }
+           
+        })
+        return index;
+    }
+    deletar = (sku) => {
+        const index = this.obterIndex(sku)
+        if(index !== null){
+            const produtos = this.obterProdutos()
+            produtos.splice(index, 1);
+            localStorage.setItem(PRODUTOS, JSON.stringify(produtos));
+            return produtos;
+        }
+        
+    }
     salvar = (produto)=>{
         this.validar(produto)
        let produtos = localStorage.getItem(PRODUTOS)
@@ -15,12 +44,18 @@ export default class ProdutoService{
        }else{
            produtos = JSON.parse(produtos);
        }
-
-       produtos.push(produto)
+       const index = this.obterIndex(produto.SKU);
+       console.log('INDEX SALVAR:' + index);
+       if(index === null){
+        produtos.push(produto)
+       }else{
+           produtos[index] = produto;
+       }
+      
        localStorage.setItem(PRODUTOS, JSON.stringify(produtos));
     
     }
-    validar = (produto)=>{
+        validar = (produto)=>{
         const errors = [];
         if(!produto.nome){
             errors.push("O campo nome é obrigatório!")

@@ -1,10 +1,11 @@
 import React from 'react'
+import {link, Link} from 'react-router-dom'
 
 function Navbar() {
     return (
 
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a className="navbar-brand" href="#">Produtos</a>
+            <a className="navbar-brand" href='#'>Produtos </a>
             <button className="navbar-toggler"
                 type="button"
                 data-toggle="collapse"
@@ -18,19 +19,18 @@ function Navbar() {
             <div className="collapse navbar-collapse" id="navbarColor01">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item active">
-                        <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                        <Link className="nav-link" to ="/"> Home <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Produto</a>
+                        <Link className="nav-link" to ="/cadastro"> Produto </Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">Consulta</a>
+                        <Link className="nav-link" to ="/consulta"> Consulta </Link>
                     </li>
                 </ul>
             </div>
         </nav>
-
-    )
+    )    
 }
 
 export default Navbar;
